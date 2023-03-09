@@ -37,35 +37,43 @@ function preload() {
   text(scoreCounter, 180, 10, 20, 40);
 
   fireballShot();
-  enemyBreach(enemiesArray);
+  enemyBreach();
+  stopFireballs();
 
-    for (enemy of enemiesArray) {
-        enemy.y += 2;
+  for (enemy of enemiesArray) {
+    enemy.y += 2;
 
-        image(imgEnemy, enemy.x, enemy.y, enemy.w, enemy.h);
-        noFill();
-        noStroke();
-        rect(enemy.x, enemy.y, enemy.w, enemy.h);
-        // collide(fireBalls, enemy);
-      }
+    image(imgEnemy, enemy.x, enemy.y, enemy.w, enemy.h);
+    noFill();
+    noStroke();
+    rect(enemy.x, enemy.y, enemy.w, enemy.h);
+
+    // for enemies to not be displayed on game over screen but sth is wrong
+  //   enemy.update();
+  //   enemy.draw();
+  //   if (enemyBreach()) { 
+  //    gameOver()
+  //    return; 
+  // }
+
+  }
     
-    for (fireball of fireballsArray) {
+  for (fireball of fireballsArray) {
         fireball.y -= 10;   // speed of fireballs
         fill(255,0,0);
         stroke(255, 215, 0);
         circle(fireball.x, fireball.y, 20);
         
-    }
+  }
 
-    
-    }   // end of draw function
+}   // end of draw function
 
 
- // fireball-knight collision: when a fireball touches the enemy it'll remove both, the fireball and the enemy and add a point to score
- function fireballShot () {
+// fireball-knight collision: when a fireball touches the enemy it'll remove both, the fireball and the enemy and add a point to score
+function fireballShot () {
   for (enemy of enemiesArray) {
     for (fireball of fireballsArray) {
-      if (dist(enemy.x, enemy.y, fireball.x, fireball.y) < 40) {
+      if (dist(enemy.x, enemy.y, fireball.x, fireball.y) < 60) {
         enemiesArray.splice(enemiesArray.indexOf(enemy), 1);
         fireballsArray.splice(fireballsArray.indexOf(fireball), 1);
         scoreCounter++;
@@ -75,10 +83,21 @@ function preload() {
 }
 
 // if a knight passess the bottom line of the canvas, game over
-function enemyBreach () {
-  if (enemy.y > 600) {
-    gameOver();
-    return true;
+function enemyBreach() {
+  for (enemy of enemiesArray) {
+    if (enemy.y > 600) {
+      gameOver();
+      return true;
+    }
+  }
+}
+
+// fireballs that go past the screen won't by accident shoot sth that is yet to appear on the screen
+function stopFireballs() {
+  for (fireball of fireballsArray) {
+    if (fireball.y < 0) {
+      fireballsArray.splice(fireballsArray.indexOf(fireball), 1);
+    }
   }
 }
 
