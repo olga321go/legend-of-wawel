@@ -31,7 +31,11 @@ function preload() {
 
   function setup() {
     canvas = createCanvas(1200, 600);
+    canvas.center("horizontal");
     canvas.hide();
+    canvas.style("margin-top", "-100px");
+    noLoop();
+    
     
   } // end of setup function
 
@@ -195,4 +199,5 @@ startButton.onclick = () => {
 function startGame() {
   startScreen.style.display = "none";
   canvas.show();
+  loop();
 }

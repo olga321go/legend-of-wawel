@@ -1,0 +1,30 @@
+/* brown grass rgb 215	160	37	
+pink cloud rgb 186	71	137
+dark purple rgb (77	19	58)
+peach sky rgb (255	94	85)
+lighter blue (0	187	188)
+almost white blue (175	233	234)	 */
+
+html {
+    background-image: linear-gradient(to right, rgb(0	187	188),rgb(175	233	234));
+}
+
+body
+{
+    font-family: Optima, Sans-Serif;
+}
+
+#game-intro h1 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+#game-intro p {
+    background-image: url("/img/message-frame.png");
+    background-repeat: no-repeat;
+    height: 500px;
+    background-position: center;
+    text-align: center;
+    margin-top: 0;
+    padding-top: 0;
+}
