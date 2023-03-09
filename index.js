@@ -1,3 +1,7 @@
+const startButton = document.getElementById('start-button');
+const startScreen = document.getElementById('game-intro');
+
+let canvas;
 let imgForest;
 let imgDragon;
 let imgEnemy;
@@ -26,7 +30,8 @@ function preload() {
   } // end of preload function
 
   function setup() {
-    createCanvas(1200, 600);
+    canvas = createCanvas(1200, 600);
+    canvas.hide();
     
   } // end of setup function
 
@@ -108,7 +113,7 @@ function fireballShot() {
   }
 }
 
-// what happens when sheep isn't shot = scoreCounter++
+// what happens when sheep isn't shot and leaves the creen = scoreCounter++
 function sheepPointsUp() {
   for (sheep of sheepArray) {
     if (sheep.y === 600) {
@@ -116,6 +121,15 @@ function sheepPointsUp() {
     }
   }
 
+}
+
+function gameOver () {
+  redraw();
+  background(0, 0, 0);
+  text('! GAME OVER !', 130, 160, 300, 300);
+  text('Your score is:', 150, 190, 300, 300);
+  text(scoreCounter, 230, 225, 20, 40);
+  noLoop();
 }
 
 // if a knight passess the bottom line of the canvas, game over
@@ -138,14 +152,6 @@ function stopFireballs() {
   }
 }
 
-function gameOver () {
-  redraw();
-  background(0, 0, 0);
-  text('! GAME OVER !', 130, 160, 300, 300);
-  text('Your score is:', 150, 190, 300, 300);
-  text(scoreCounter, 230, 225, 20, 40);
-  noLoop();
-}
 
 // creating fireballs with a mouse click
 function mouseClicked() {
@@ -179,3 +185,14 @@ function createSheep () {
   sheepArray.push(sheep);
 }
 setInterval(createSheep, 5000); // speed of sheep coming
+
+// NORMAL JS
+startButton.onclick = () => {
+  startGame();
+};
+
+// when we click start button, start screen is hidden and we see the canvas
+function startGame() {
+  startScreen.style.display = "none";
+  canvas.show();
+}
