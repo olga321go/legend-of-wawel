@@ -1,6 +1,7 @@
 let imgForest;
 let imgDragon;
 let imgEnemy;
+let imgSheep;
 let dragon = {
     x: 300,
     y: 480,
@@ -9,6 +10,7 @@ let dragon = {
 }
 let enemiesArray = [];
 let fireballsArray = [];
+let sheepArray = [];
 let scoreCounter = 0;
 
 
@@ -18,6 +20,9 @@ function preload() {
     imgDragon = loadImage('/img/dragons-head.png');
 
     imgEnemy = loadImage('/img/knight.png');
+
+    imgSheep = loadImage('/img/sheep.png');
+
   } // end of preload function
 
   function setup() {
@@ -39,6 +44,7 @@ function preload() {
   fireballShot();
   enemyBreach();
   stopFireballs();
+  sheepPointsUp();
 
   for (enemy of enemiesArray) {
     enemy.y += 2;
@@ -55,7 +61,15 @@ function preload() {
   //    gameOver()
   //    return; 
   // }
+  }
 
+  for (sheep of sheepArray) {
+    sheep.y += 2;
+
+    image(imgSheep, sheep.x, sheep.y, sheep.w, sheep.h);
+    noFill();
+    noStroke();
+    rect(sheep.x, sheep.y, sheep.w, sheep.h);
   }
     
   for (fireball of fireballsArray) {
@@ -69,8 +83,10 @@ function preload() {
 }   // end of draw function
 
 
+
+
 // fireball-knight collision: when a fireball touches the enemy it'll remove both, the fireball and the enemy and add a point to score
-function fireballShot () {
+function fireballShot() {
   for (enemy of enemiesArray) {
     for (fireball of fireballsArray) {
       if (dist(enemy.x, enemy.y, fireball.x, fireball.y) < 60) {
@@ -80,6 +96,26 @@ function fireballShot () {
       }
     }
   }
+
+  for (sheep of sheepArray) {
+    for (fireball of fireballsArray) {
+      if (dist(sheep.x, sheep.y, fireball.x, fireball.y) < 60) {
+        sheepArray.splice(sheepArray.indexOf(sheep), 1);
+        fireballsArray.splice(fireballsArray.indexOf(fireball), 1);
+        scoreCounter--;
+      }
+    }
+  }
+}
+
+// what happens when sheep isn't shot = scoreCounter++
+function sheepPointsUp() {
+  for (sheep of sheepArray) {
+    if (sheep.y === 600) {
+      scoreCounter++;
+    }
+  }
+
 }
 
 // if a knight passess the bottom line of the canvas, game over
@@ -91,6 +127,7 @@ function enemyBreach() {
     }
   }
 }
+
 
 // fireballs that go past the screen won't by accident shoot sth that is yet to appear on the screen
 function stopFireballs() {
@@ -120,13 +157,25 @@ function mouseClicked() {
 }
 
 function createEnemy () {
-  let obstacleW = 60;
+  let enemyW = 60;
   let enemy = {
-    x: random(200, 1000 - obstacleW), // this way our enemy doesn't go past the right tree
+    x: random(200, 1000 - enemyW), // this way our enemy doesn't go past the right tree
     y: -50,
-    w: obstacleW,
+    w: enemyW,
     h: 60,
   }
     enemiesArray.push(enemy);
 }
 setInterval(createEnemy, 2500); // speed of knights coming down
+
+function createSheep () {
+  let sheepW = 60;
+  let sheep = {
+    x: random(200, 1000 - sheepW), // this way our enemy doesn't go past the right tree
+    y: -50,
+    w: sheepW,
+    h: 60,
+  }
+  sheepArray.push(sheep);
+}
+setInterval(createSheep, 5000); // speed of sheep coming
