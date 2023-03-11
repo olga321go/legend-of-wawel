@@ -61,6 +61,7 @@ function preload() {
   enemyBreach();
   stopFireballs();
   sheepPointsUp();
+  // levelUp();
 
   for (enemy of enemiesArray) {
     enemy.y += 2;
@@ -178,7 +179,7 @@ function createEnemy () {
   let enemyW = 60;
   let enemy = {
     x: random(200, 1000 - enemyW), // this way our enemy doesn't go past the right tree
-    y: -50,
+    y: random(0, -400),
     w: enemyW,
     h: 60,
   }
@@ -189,24 +190,36 @@ function createSheep () {
   let sheepW = 60;
   let sheep = {
     x: random(200, 1000 - sheepW), // this way our enemy doesn't go past the right tree
-    y: -50,
+    y: random(0, -400),
     w: sheepW,
     h: 60,
   }
   sheepArray.push(sheep);
 }
 
+// it has to be called in draw() but then it does crazy stuff
+function levelUp () {
+  if (scoreCounter >= 10 && scoreCounter < 30) {
+    setInterval(createEnemy, 2000); // speed of knights coming down
+    setInterval(createSheep, 4000); // speed of sheep coming down
+
+  } else if (scoreCounter >= 30 && scoreCounter < 50) {
+    setInterval(createEnemy, 1500); 
+    setInterval(createSheep, 2000); 
+
+  } else if (scoreCounter >= 50) {
+    setInterval(createEnemy, 1000); 
+    setInterval(createSheep, 1000);
+  }
+}
+
 // NORMAL JS
 startButton.onclick = () => {
   startGame();
-  setInterval(createEnemy, 2500); // speed of knights coming down
-  setInterval(createSheep, 5000); // speed of sheep coming
 };
 
 restartButton.onclick = () => {
   startGame();
-  setInterval(createEnemy, 2500); // speed of knights coming down
-  setInterval(createSheep, 5000); // speed of sheep coming
   console.log('resart');
 };
 
@@ -215,11 +228,15 @@ function startGame() {
   enemiesArray = [];
   sheepArray = [];
   fireballsArray = [];
+  scoreCounter = 0;
+  setInterval(createEnemy, 2500); // speed of knights coming down
+  setInterval(createSheep, 5000); // speed of sheep coming
   startScreen.style.display = "none";
   gameOverScreen.style.display = "none";
   canvas.show();
-  canvas.position(0,100);
+  canvas.position(0,75);
   canvas.center("horizontal");
+  levelUp();
   loop();
   
 }
