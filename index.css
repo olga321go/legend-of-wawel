@@ -3,15 +3,23 @@ pink cloud rgb 186	71	137
 dark purple rgb (77	19	58)
 peach sky rgb (255	94	85)
 lighter blue (0	187	188)
-almost white blue (175	233	234)	 */
+almost white blue (175	233	234)	
+beige start screen (241	226	200) */
 
 html {
-    background-image: linear-gradient(to right, rgb(0	187	188),rgb(175	233	234));
+    background-image: linear-gradient(to right, rgb(106 139 39),rgb(241 226 200));
 }
 
 body
 {
     font-family: Optima, Sans-Serif;
+}
+
+#game-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
 }
 
 #game-intro h1 {
@@ -22,9 +30,19 @@ body
 #game-intro p {
     background-image: url("/img/message-frame.png");
     background-repeat: no-repeat;
-    height: 500px;
+    height: 470px;
     background-position: center;
     text-align: center;
     margin-top: 0;
+    margin-bottom: 0;
     padding-top: 0;
+}
+
+#start-button {
+    background-color: rgb(241	226	200);
+    width: 200px;
+    height: 40px;
+    padding: 20 40;
+    margin: 0 auto;
+    border: 1px solid rgb(113	87	74	);
 }

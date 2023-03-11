@@ -6,6 +6,7 @@ let imgForest;
 let imgDragon;
 let imgEnemy;
 let imgSheep;
+let imgMessage;
 let dragon = {
     x: 300,
     y: 480,
@@ -19,7 +20,7 @@ let scoreCounter = 0;
 
 
 function preload() {
-    imgForest = loadImage('/img/forest-blurred.jpg');
+    imgForest = loadImage('/img/bg-blurred-with-frame.png');
   
     imgDragon = loadImage('/img/dragons-head.png');
 
@@ -27,13 +28,15 @@ function preload() {
 
     imgSheep = loadImage('/img/sheep.png');
 
+    imgMessage = loadImage('/img/message-frame.png');
+
   } // end of preload function
 
   function setup() {
     canvas = createCanvas(1200, 600);
     canvas.center("horizontal");
     canvas.hide();
-    canvas.style("margin-top", "-100px");
+    canvas.style("margin-top", "-550px");
     noLoop();
     
     
@@ -45,10 +48,11 @@ function preload() {
     image(imgDragon, mouseX - 50, dragon.y, dragon.w, dragon.h);
     
     // score counter while game on
+  textFont('Optima');
+  fill(241, 226, 200);
   textSize(32);
-  fill(255,255,255);
-  text('Score: ', 75, 10, 20, 40);
-  text(scoreCounter, 180, 10, 20, 40);
+  text('Score: ', 240, 40, 20, 40);
+  text(scoreCounter, 340, 40, 20, 40);
 
   fireballShot();
   enemyBreach();
@@ -128,9 +132,12 @@ function sheepPointsUp() {
 }
 
 function gameOver () {
-  redraw();
-  background(0, 0, 0);
-  text('! GAME OVER !', 130, 160, 300, 300);
+  let messageBoardX = (window.innerWidth - 500) / 2;
+  imageMode(CENTER);
+  image(imgMessage, messageBoardX, 350, 500, 500);
+  fill(0, 0, 0);
+  textFont('Optima');
+  text('GAME OVER', 130, 160, 300, 300);
   text('Your score is:', 150, 190, 300, 300);
   text(scoreCounter, 230, 225, 20, 40);
   noLoop();
@@ -176,7 +183,7 @@ function createEnemy () {
   }
     enemiesArray.push(enemy);
 }
-setInterval(createEnemy, 2500); // speed of knights coming down
+
 
 function createSheep () {
   let sheepW = 60;
@@ -188,11 +195,13 @@ function createSheep () {
   }
   sheepArray.push(sheep);
 }
-setInterval(createSheep, 5000); // speed of sheep coming
+
 
 // NORMAL JS
 startButton.onclick = () => {
   startGame();
+  setInterval(createEnemy, 2500); // speed of knights coming down
+  setInterval(createSheep, 5000); // speed of sheep coming
 };
 
 // when we click start button, start screen is hidden and we see the canvas
