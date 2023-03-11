@@ -1,5 +1,8 @@
 const startButton = document.getElementById('start-button');
+const restartButton = document.getElementById('restart-button');
 const startScreen = document.getElementById('game-intro');
+const gameOverScreen = document.getElementById('game-over');
+let scoreGameOver = document.getElementById('score');
 
 let canvas;
 let imgForest;
@@ -34,10 +37,10 @@ function preload() {
 
   function setup() {
     canvas = createCanvas(1200, 600);
-    canvas.center("horizontal");
     canvas.hide();
-    canvas.style("margin-top", "-550px");
+    gameOverScreen.style.display = "none";
     noLoop();
+
     
     
   } // end of setup function
@@ -132,15 +135,14 @@ function sheepPointsUp() {
 }
 
 function gameOver () {
-  let messageBoardX = (window.innerWidth - 500) / 2;
-  imageMode(CENTER);
-  image(imgMessage, messageBoardX, 350, 500, 500);
-  fill(0, 0, 0);
-  textFont('Optima');
-  text('GAME OVER', 130, 160, 300, 300);
-  text('Your score is:', 150, 190, 300, 300);
-  text(scoreCounter, 230, 225, 20, 40);
   noLoop();
+  startScreen.style.display = "none";
+  canvas.hide();
+  gameOverScreen.style.display = "block";
+  scoreGameOver = document.getElementById('score');
+  console.log(scoreGameOver, scoreCounter);
+  scoreGameOver.innerText = scoreCounter;
+  
 }
 
 // if a knight passess the bottom line of the canvas, game over
@@ -163,7 +165,6 @@ function stopFireballs() {
   }
 }
 
-
 // creating fireballs with a mouse click
 function mouseClicked() {
   let fireball = {
@@ -184,7 +185,6 @@ function createEnemy () {
     enemiesArray.push(enemy);
 }
 
-
 function createSheep () {
   let sheepW = 60;
   let sheep = {
@@ -196,7 +196,6 @@ function createSheep () {
   sheepArray.push(sheep);
 }
 
-
 // NORMAL JS
 startButton.onclick = () => {
   startGame();
@@ -204,9 +203,23 @@ startButton.onclick = () => {
   setInterval(createSheep, 5000); // speed of sheep coming
 };
 
+restartButton.onclick = () => {
+  startGame();
+  setInterval(createEnemy, 2500); // speed of knights coming down
+  setInterval(createSheep, 5000); // speed of sheep coming
+  console.log('resart');
+};
+
 // when we click start button, start screen is hidden and we see the canvas
 function startGame() {
+  enemiesArray = [];
+  sheepArray = [];
+  fireballsArray = [];
   startScreen.style.display = "none";
+  gameOverScreen.style.display = "none";
   canvas.show();
+  canvas.position(0,100);
+  canvas.center("horizontal");
   loop();
+  
 }
