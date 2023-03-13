@@ -21,6 +21,9 @@ let fireballsArray = [];
 let sheepArray = [];
 let scoreCounter = 0;
 
+let fireballSound;
+let gameOverSound;
+
 
 function preload() {
     imgForest = loadImage('/img/bg-blurred-with-frame.png');
@@ -32,6 +35,11 @@ function preload() {
     imgSheep = loadImage('/img/sheep.png');
 
     imgMessage = loadImage('/img/message-frame.png');
+
+    // soundFormats('mp3', 'ogg');
+    // fireballSound = loadSound('/audio/fireball-sound.wav');
+
+    // gameOverSound = loadSound('/audio/game-over.wav');
 
   } // end of preload function
 
@@ -137,13 +145,13 @@ function sheepPointsUp() {
 
 function gameOver () {
   noLoop();
+  // gameOverSound.play();
   startScreen.style.display = "none";
   canvas.hide();
   gameOverScreen.style.display = "block";
   scoreGameOver = document.getElementById('score');
   console.log(scoreGameOver, scoreCounter);
   scoreGameOver.innerText = scoreCounter;
-  
 }
 
 // if a knight passess the bottom line of the canvas, game over
@@ -168,6 +176,8 @@ function stopFireballs() {
 
 // creating fireballs with a mouse click
 function mouseClicked() {
+  // fireballSound.play();
+
   let fireball = {
     x: mouseX,
     y: 500,
