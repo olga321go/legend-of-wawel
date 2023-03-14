@@ -28,6 +28,7 @@ let enemySpawnDifficulty;
 
 let fireballSound;
 let gameOverSound;
+let battleMusic;
 
 
 function preload() {
@@ -44,6 +45,8 @@ function preload() {
     fireballSound = loadSound('/audio/fireball-sound.wav');
 
     gameOverSound = loadSound('/audio/game-over.wav');
+
+    battleMusic = loadSound('/audio/battle-music.wav');
 
   } // end of preload function
 
@@ -70,7 +73,7 @@ function preload() {
   fireballShot();
   enemyBreach();
   stopFireballs();
-  sheepPointsUp();  // doesn't work anymore but why?
+  sheepPointsUp();  
   levelUp();
   sheepSpawnBuffer++;
   if (sheepSpawnBuffer % sheepSpawnDifficulty === 1) {
@@ -101,7 +104,7 @@ function preload() {
   }
     
   for (fireball of fireballsArray) {
-        fireball.y -= 10;   // speed of fireballs
+        fireball.y -= 15;   // speed of fireballs
         fill(255,0,0);
         stroke(255, 215, 0);
         circle(fireball.x, fireball.y, 20);
@@ -148,6 +151,7 @@ function sheepPointsUp() {
 
 function gameOver () {
   noLoop();
+  battleMusic.stop();
   gameOverSound.play();
   startScreen.style.display = "none";
   canvas.hide();
@@ -213,16 +217,16 @@ function createSheep () {
 // it has to be called in draw() but then it does crazy stuff
 function levelUp () {
   if (scoreCounter >= 10 && scoreCounter < 30) {
-    enemySpawnDifficulty = 120; // speed of knights coming down
-    sheepSpawnDifficulty = 240;
+    enemySpawnDifficulty = 60; // speed of knights coming down
+    sheepSpawnDifficulty = 120;
 
   } else if (scoreCounter >= 30 && scoreCounter < 50) {
-    enemySpawnDifficulty = 90; 
-    sheepSpawnDifficulty = 120; 
+    enemySpawnDifficulty = 30; 
+    sheepSpawnDifficulty = 60; 
 
   } else if (scoreCounter >= 50) {
-    enemySpawnDifficulty = 60; 
-    sheepSpawnDifficulty = 60;
+    enemySpawnDifficulty = 10; 
+    sheepSpawnDifficulty = 10;
   }
 }
 
@@ -247,11 +251,13 @@ function startGame() {
   canvas.show();
   canvas.position(0,75);
   canvas.center("horizontal");
-  levelUp(); // doesn't work
+  battleMusic.play();
+  battleMusic.loop();
+  levelUp();
   sheepSpawnBuffer = 0;
-  sheepSpawnDifficulty = 300;
+  sheepSpawnDifficulty = 180;
   enemySpawnBuffer = 0;
-  enemySpawnDifficulty = 180;
+  enemySpawnDifficulty = 120;
   loop();
  
 }
