@@ -68,8 +68,8 @@ function preload() {
   fireballShot();
   enemyBreach();
   stopFireballs();
-  sheepPointsUp();
-  // levelUp();
+  sheepPointsUp();  // doesn't work anymore but why?
+  // levelUp(); moved to start game function but it doesn't work
 
   for (enemy of enemiesArray) {
     enemy.y += 2;
@@ -133,14 +133,14 @@ function fireballShot() {
   }
 }
 
-// what happens when sheep isn't shot and leaves the creen = scoreCounter++
+// what happens when sheep isn't shot and leaves the screen = scoreCounter++
 function sheepPointsUp() {
   for (sheep of sheepArray) {
-    if (sheep.y === 600) {
+    if (sheep.y >= 600) {
+      sheepArray.splice(sheepArray.indexOf(sheep), 1);
       scoreCounter++;
     }
   }
-
 }
 
 function gameOver () {
@@ -246,7 +246,6 @@ function startGame() {
   canvas.show();
   canvas.position(0,75);
   canvas.center("horizontal");
-  levelUp();
+  levelUp(); // doesn't work
   loop();
-  
 }
