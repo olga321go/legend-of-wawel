@@ -16,10 +16,15 @@ let dragon = {
     w: 83,
     h: 110
 }
+
 let enemiesArray = [];
 let fireballsArray = [];
 let sheepArray = [];
 let scoreCounter = 0;
+let sheepSpawnBuffer;
+let sheepSpawnDifficulty;
+let enemySpawnBuffer;
+let enemySpawnDifficulty;
 
 let fireballSound;
 let gameOverSound;
@@ -36,10 +41,9 @@ function preload() {
 
     imgMessage = loadImage('/img/message-frame.png');
 
-    // soundFormats('mp3', 'ogg');
-    // fireballSound = loadSound('/audio/fireball-sound.wav');
+    fireballSound = loadSound('/audio/fireball-sound.wav');
 
-    // gameOverSound = loadSound('/audio/game-over.wav');
+    gameOverSound = loadSound('/audio/game-over.wav');
 
   } // end of preload function
 
@@ -49,8 +53,6 @@ function preload() {
     gameOverScreen.style.display = "none";
     noLoop();
 
-    
-    
   } // end of setup function
 
   function draw() {
@@ -69,7 +71,16 @@ function preload() {
   enemyBreach();
   stopFireballs();
   sheepPointsUp();  // doesn't work anymore but why?
-  // levelUp(); moved to start game function but it doesn't work
+  levelUp();
+  sheepSpawnBuffer++;
+  if (sheepSpawnBuffer % sheepSpawnDifficulty === 1) {
+    createSheep();
+  }
+
+  enemySpawnBuffer++;
+  if (enemySpawnBuffer % enemySpawnDifficulty === 1) {
+    createEnemy();
+  }
 
   for (enemy of enemiesArray) {
     enemy.y += 2;
@@ -78,14 +89,6 @@ function preload() {
     noFill();
     noStroke();
     rect(enemy.x, enemy.y, enemy.w, enemy.h);
-
-    // for enemies to not be displayed on game over screen but sth is wrong
-  //   enemy.update();
-  //   enemy.draw();
-  //   if (enemyBreach()) { 
-  //    gameOver()
-  //    return; 
-  // }
   }
 
   for (sheep of sheepArray) {
@@ -145,7 +148,7 @@ function sheepPointsUp() {
 
 function gameOver () {
   noLoop();
-  // gameOverSound.play();
+  gameOverSound.play();
   startScreen.style.display = "none";
   canvas.hide();
   gameOverScreen.style.display = "block";
@@ -176,7 +179,7 @@ function stopFireballs() {
 
 // creating fireballs with a mouse click
 function mouseClicked() {
-  // fireballSound.play();
+  fireballSound.play();
 
   let fireball = {
     x: mouseX,
@@ -210,16 +213,16 @@ function createSheep () {
 // it has to be called in draw() but then it does crazy stuff
 function levelUp () {
   if (scoreCounter >= 10 && scoreCounter < 30) {
-    setInterval(createEnemy, 2000); // speed of knights coming down
-    setInterval(createSheep, 4000); // speed of sheep coming down
+    enemySpawnDifficulty = 120; // speed of knights coming down
+    sheepSpawnDifficulty = 240;
 
   } else if (scoreCounter >= 30 && scoreCounter < 50) {
-    setInterval(createEnemy, 1500); 
-    setInterval(createSheep, 2000); 
+    enemySpawnDifficulty = 90; 
+    sheepSpawnDifficulty = 120; 
 
   } else if (scoreCounter >= 50) {
-    setInterval(createEnemy, 1000); 
-    setInterval(createSheep, 1000);
+    enemySpawnDifficulty = 60; 
+    sheepSpawnDifficulty = 60;
   }
 }
 
@@ -239,13 +242,16 @@ function startGame() {
   sheepArray = [];
   fireballsArray = [];
   scoreCounter = 0;
-  setInterval(createEnemy, 2500); // speed of knights coming down
-  setInterval(createSheep, 5000); // speed of sheep coming
   startScreen.style.display = "none";
   gameOverScreen.style.display = "none";
   canvas.show();
   canvas.position(0,75);
   canvas.center("horizontal");
   levelUp(); // doesn't work
+  sheepSpawnBuffer = 0;
+  sheepSpawnDifficulty = 300;
+  enemySpawnBuffer = 0;
+  enemySpawnDifficulty = 180;
   loop();
+ 
 }
