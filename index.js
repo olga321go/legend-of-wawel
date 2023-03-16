@@ -32,21 +32,21 @@ let battleMusic;
 
 
 function preload() {
-    imgForest = loadImage('/img/bg-blurred-with-frame.png');
+    imgForest = loadImage('img/bg-blurred-with-frame.png');
   
-    imgDragon = loadImage('/img/dragons-head.png');
+    imgDragon = loadImage('img/dragons-head.png');
 
-    imgEnemy = loadImage('/img/knight.png');
+    imgEnemy = loadImage('img/knight.png');
 
-    imgSheep = loadImage('/img/sheep.png');
+    imgSheep = loadImage('img/sheep.png');
 
-    imgMessage = loadImage('/img/message-frame.png');
+    imgMessage = loadImage('img/message-frame.png');
 
-    fireballSound = loadSound('/audio/fireball-sound.wav');
+    fireballSound = loadSound('audio/fireball-sound.wav');
 
-    gameOverSound = loadSound('/audio/game-over.wav');
+    gameOverSound = loadSound('audio/game-over.wav');
 
-    battleMusic = loadSound('/audio/battle-music.wav');
+    battleMusic = loadSound('audio/battle-music.wav');
 
   } // end of preload function
 
