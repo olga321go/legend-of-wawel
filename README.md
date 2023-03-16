@@ -1,3 +1,5 @@
+Test 
+
 The main purpose of this project is to develop from scratch a JS game using p5.js library. 
 
 Legend of Wawel is a shooter game created in JS, based on a legend of the Wawel Dragon. The start screen includes a link to a website with the info about the legend. After pressing a “START GAME” button, a player controls a dragon using the mouse's movement and shoots fireballs with the left click. 
