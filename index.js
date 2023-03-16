@@ -58,7 +58,23 @@ function preload() {
 
   } // end of setup function
 
+  function drawStartScreen( ) {
+
+  }
+
+  function drawGameoverScreen( ) {
+
+  }
+  
+  let gameState = "start"
+
   function draw() {
+    if (gameState === "start") {
+      drawStartScreen()
+    }
+    if (gameState === "gameover")  {
+      drawGameoverScreen()
+    }
     background(220);
     image(imgForest, 0, 0, 1200, 600);
     image(imgDragon, mouseX - 50, dragon.y, dragon.w, dragon.h);
@@ -148,6 +164,26 @@ function sheepPointsUp() {
     }
   }
 }
+
+// how to switch between the screens other way
+// even better would be enums but we dont have them outsie of TypeScript :)
+const allScreens = {
+  gameOverScreen,
+  startScreen,
+  gameScreen,
+};
+
+function switchToScreen(screenToSwitchOn) {
+  Object.entries(allScreens).forEach(( [key, element]) => {
+    if (key === screenToSwitchOn) {
+      element.style.display = "block"
+    } else {
+      element.style.display = "none"
+    }
+  })
+}
+
+switchToScreen("gameOverScreen");
 
 function gameOver () {
   noLoop();
