@@ -53,7 +53,7 @@ function preload() {
   function setup() {
     canvas = createCanvas(1200, 600);
     canvas.hide();
-    gameOverScreen.style.display = "none";
+    // gameOverScreen.style.display = "none";
     noLoop();
 
   } // end of setup function
@@ -75,6 +75,7 @@ function preload() {
   stopFireballs();
   sheepPointsUp();  
   levelUp();
+
   sheepSpawnBuffer++;
   if (sheepSpawnBuffer % sheepSpawnDifficulty === 1) {
     createSheep();
